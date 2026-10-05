@@ -1,0 +1,93 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Flask Calculator</title>
+    <!-- Bootstrap CSS for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .calculator-card {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="calculator-card">
+        <h3 class="text-center mb-4">🧮 Calculator</h3>
+        
+        <!-- Form start: POST method se data backend ko jayega -->
+        <form method="POST" action="/">
+            
+            <div class="mb-3">
+                <label for="num1" class="form-label">First Number</label>
+                <!-- step="any" se user decimals (e.g., 2.5) bhi daal sakta hai -->
+                <input type="number" step="any" class="form-control" id="num1" name="number1" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="operation" class="form-label">Operation</label>
+                <select class="form-select" id="operation" name="operation">
+                    <option value="add">Addition (+)</option>
+                    <option value="subtract">Subtraction (-)</option>
+                    <option value="multiply">Multiplication (×)</option>
+                    <option value="divide">Division (÷)</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="num2" class="form-label">Second Number</label>
+                <input type="number" step="any" class="form-control" id="num2" name="number2" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100">Calculate</button>
+        </form>
+
+        <!-- Jinja2 Templating: Agar result None nahi hai, toh ye box dikhega -->
+        {% if result is not none %}
+            <div class="alert alert-success mt-4 text-center" role="alert">
+                <strong>Result:</strong> {{ result }}
+            </div>
+        {% endif %}
+        <!-- Jinja2 Templating: Agar result None nahi hai, toh ye box dikhega -->
+        {% if result is not none %}
+            <div class="alert alert-success mt-4 text-center" role="alert">
+                <strong>Result:</strong> {{ result }}
+            </div>
+        {% endif %}
+
+        <!-- NAYA CODE YAHAN SE: History Section -->
+        <div class="mt-5">
+            <h5 class="text-center text-muted">🕒 Recent Calculations</h5>
+            <ul class="list-group mt-3 shadow-sm">
+                <!-- Jinja2 Loop: Har history item ke liye ek list item (li) banega -->
+                {% for item in history %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ item[0] }} 
+                        <span class="badge bg-secondary rounded-pill">= {{ item[1] }}</span>
+                    </li>
+                {% else %}
+                    <!-- Agar database khali hai -->
+                    <li class="list-group-item text-center text-muted">No history yet!</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- NAYA CODE YAHAN TAK -->
+        
+    </div>
+</div>
+        
+    </div>
+</div>
+
+</body>
+</html>
